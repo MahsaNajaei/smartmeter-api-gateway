@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+        - id: administration-service
+          uri: lb://ADMINISTRATION-SERVICE
+          predicates:
+            - Path=/administration/**
+
+        - id: user-identification-service
+          uri: lb://USER-IDENTIFICATION-SERVICE
+          predicates:
+            - Path=/identity/**
+
+        - id: consumption-manager-service
+          uri: lb://CONSUMPTION-MANAGER-SERVICE
+          predicates:
+            - Path=/consumption/**
+
+        - id: cost-calclation-service
+          uri: lb://COST-CALCULATION-SERVICE
+          predicates:
+            - Path=/costs/**
+
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
+          predicates:
+            - Path=/notification/**
